@@ -8,9 +8,9 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var engine  = require( 'ejs-locals' );
 
 var app = express();
 // ToDoスキーマを定義する
@@ -26,16 +26,21 @@ mongoose.model('Todo', todoSchema);
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+app.set('port', process.env.PORT || 3001 );
+app.engine('ejs', engine );
+app.set('views', path.join( __dirname, 'views' ));
+app.set('view engine', 'ejs' );
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(express.favicon());
 app.use(express.logger( 'dev' ));
+app.use(express.cookieParser());
+app.use(express.bodyParser());
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
 app.use(app.router );
-app.use(express.static( path.join( __dirname, 'public' )));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -59,6 +64,8 @@ app.get('/todo', function(req, res) {
 });
 
 app.get( '/', routes.index );
+app.get( '/destroy/:id', routes.destroy );
+app.get( '/edit/:id', routes.edit );
  
 http.createServer( app ).listen( app.get( 'port' ), function(){
   console.log( 'Express server listening on port ' + app.get( 'port' ));
@@ -113,5 +120,32 @@ app.use(function(err, req, res, next) {
   });
 });
 
+app.post( '/update/:id', routes.update );
+
 
 module.exports = app;
+
+exports.index = function ( req, res ){
+  Todo.
+    find().
+    sort( '-updated_at' ).
+    exec( function ( err, todos ){
+      res.render( 'index', {
+          title : 'Express Todo Example',
+          todos : todos
+      });
+    });
+};
+ 
+exports.edit = function ( req, res ){
+  Todo.
+    find().
+    sort( '-updated_at' ).
+    exec( function ( err, todos ){
+      res.render( 'edit', {
+          title   : 'Express Todo Example',
+          todos   : todos,
+          current : req.params.id
+      });
+    });
+};
