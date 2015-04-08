@@ -1,1 +1,3 @@
-#STEP2 最終課題：TODOリスト（フロントエンド＋サーバサイド）を作ろう
+# Express Todo Example
+
+Source code for the tutorial [Write a todo list with Express and MongoDB](http://dreamerslab.com/blog/en/write-a-todo-list-with-express-and-mongodb/)
