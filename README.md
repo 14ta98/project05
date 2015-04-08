@@ -1,3 +1,17 @@
-# Express Todo Example
+# 製作環境
 
-Source code for the tutorial [Write a todo list with Express and MongoDB](http://dreamerslab.com/blog/en/write-a-todo-list-with-express-and-mongodb/)
+言語：HTML, CSS, JavaScript(jQuery)
+フレームワーク：express
+データベース：MongoDB
+文字コード：ファイルはUTF-8
+IE10以上、Firefox、Chrome、Safariのいずれかで動作すること
+規約
+
+コーディング規約に従うこと。
+仕様
+
+画面仕様書に従うこと。
+細かいデザインは自由とする。（使いやすユーザインターフェイスを考えてみましょう）
+独自機能を追加しても構いません。
+
+
